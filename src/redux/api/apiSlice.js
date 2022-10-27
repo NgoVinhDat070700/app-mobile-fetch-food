@@ -49,15 +49,33 @@ export const paymentOrder = createAsyncThunk(
     return response.data.saveOrder;
   },
 );
+
+export const getListBlog = createAsyncThunk('blog/getListBlog', async () => {
+  const response = await axios.get('http://192.168.1.219:5000/api/news');
+  return response.data;
+});
+
+export const authRegister = createAsyncThunk(
+  'register/authRegister',
+  async (data) => {
+    const response = await axios.post(
+      'http://192.168.1.219:5000/api/users/register',
+      data,
+    );
+    return response.data;
+  },
+);
 const initialState = {
   auth: {
     isLogin: false,
     user: {},
   },
+  userRegister: {},
   products: [],
   productDetail: {},
   categories: [],
   cart: [],
+  news: [],
   payment: {},
   isLoading: false,
   money: 0,
@@ -184,6 +202,26 @@ const apiSlice = createSlice({
       .addCase(paymentOrder.fulfilled, (state, action) => {
         state.payment = action.payload;
         state.isLoading = false;
+      })
+      .addCase(getListBlog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.news = action.payload.allNews;
+      })
+      .addCase(getListBlog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getListBlog.rejected, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authRegister.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userRegister = action.payload;
+      })
+      .addCase(authRegister.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authRegister.rejected, (state) => {
+        state.isLoading = true;
       });
   },
 });

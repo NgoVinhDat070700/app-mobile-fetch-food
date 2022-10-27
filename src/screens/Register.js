@@ -1,33 +1,33 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable eslint-comments/no-unused-disable */
 /* eslint-disable react/react-in-jsx-scope */
-import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import {Dimensions, StyleSheet, Text} from 'react-native';
-import {Button} from 'react-native';
 import {Image, TextInput, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import {authLogin} from '../redux/api/apiSlice';
+import {authRegister} from '../redux/api/apiSlice';
 
-export default function Login({navigation}) {
+export default function Register({navigation}) {
   const [hidePassword, setHidePassword] = useState('');
   const dispatch = useDispatch();
-  const handleLogin = async (values) => {
-    const result = await dispatch(authLogin(values));
-    console.log('result', result);
-    if (authLogin.fulfilled.match(result)) {
-      await AsyncStorage.setItem('token', result?.payload?.token.accessToken);
-      alert('Login Success!');
-      navigation.navigate('Home');
+  const handleRegister = async (values) => {
+    if (values.password === values.retypePassword) {
+      const result = await dispatch(authRegister(values));
+      if (authRegister.fulfilled.match(result)) {
+        alert('Register Success!');
+        navigation.navigate('Login');
+      } else {
+        alert('Register Thất bại!');
+      }
     } else {
-      alert('Login Thất bại!');
+      alert('Password và retypePassword không giống nhau!');
     }
   };
 
-  const handleRegister = () => {
-    navigation.navigate('Register');
+  const handleNavigateLogin = () => {
+    navigation.navigate('Login');
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -38,10 +38,30 @@ export default function Login({navigation}) {
           style={styles.Image}
         />
         <Formik
-          initialValues={{email: '', password: ''}}
-          onSubmit={handleLogin}>
+          initialValues={{
+            username: '',
+            email: '',
+            password: '',
+            retypePassword: '',
+          }}
+          onSubmit={handleRegister}>
           {({handleSubmit, handleChange}) => (
             <>
+              <View
+                style={{
+                  height: 60,
+                  alignSelf: 'stretch',
+                  marginBottom: 10,
+                  borderRadius: 10,
+                }}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="UserName"
+                  onChangeText={handleChange('username')}
+                  testID="username"
+                  underlineColorAndroid="transparent"
+                />
+              </View>
               <View
                 style={{
                   height: 60,
@@ -87,11 +107,41 @@ export default function Login({navigation}) {
                   />
                 </TouchableOpacity>
               </View>
+              <View
+                style={{
+                  height: 60,
+                  alignSelf: 'stretch',
+                  marginBottom: 10,
+                  borderRadius: 10,
+                }}>
+                <TextInput
+                  returnKeyType="go"
+                  keyboardType="default"
+                  style={styles.textInput}
+                  placeholder="Retype Password"
+                  onChangeText={handleChange('retypePassword')}
+                  testID="retypePassword"
+                  // onChangeText={this.props.password}
+                  underlineColorAndroid="transparent"
+                />
+                <TouchableOpacity
+                  // activeOpacity={0.8}
+                  style={styles.showPassword}>
+                  <Image
+                    source={
+                      hidePassword
+                        ? require('../assets/hide.png')
+                        : require('../assets/show.png')
+                    }
+                    style={styles.buttonImage}
+                  />
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 style={styles.btnLogin}
                 onPress={handleSubmit}
                 testID="btnSubmit">
-                <Text>Login</Text>
+                <Text>Register</Text>
               </TouchableOpacity>
             </>
           )}
@@ -106,7 +156,7 @@ export default function Login({navigation}) {
           }}>
           <View style={{flex: 1, marginLeft: 13}}>
             <Text
-              onPress={handleRegister}
+              onPress={handleNavigateLogin}
               style={
                 (styles.textSignup,
                 {
@@ -117,7 +167,7 @@ export default function Login({navigation}) {
                   // alignItems: 'flex-end',
                 })
               }>
-              Đăng ký!
+              Login !!
             </Text>
           </View>
 
@@ -145,7 +195,7 @@ export default function Login({navigation}) {
           }}>
           ------------------------ Hoặc --------------------------
         </Text>
-        <TouchableOpacity style={styles.btnLoginGG} onPress={handleLogin}>
+        <TouchableOpacity style={styles.btnLoginGG}>
           <Image
             source={require('../assets/google.png')}
             style={{

@@ -3,9 +3,8 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Cart from '../screens/Cart';
-import Products from '../screens/Products';
-import Shop from '../screens/Shop';
 import Login from '../screens/Login';
+import Blogs from '../screens/Blogs';
 export default function BottomTabs() {
   const Tab = createBottomTabNavigator();
   return (
@@ -16,8 +15,8 @@ export default function BottomTabs() {
 
           if (route.name === 'Homes') {
             iconName = focused ? 'ios-home' : 'ios-home';
-          } else if (route.name === 'Products') {
-            iconName = focused ? 'restaurant-outline' : 'restaurant-sharp';
+          } else if (route.name === 'Blogs') {
+            iconName = focused ? 'ios-film-outline' : 'ios-film-sharp';
           } else if (route.name === 'Cart') {
             iconName = focused ? 'ios-cart' : 'ios-cart';
           } else if (route.name === 'Account') {
@@ -33,7 +32,7 @@ export default function BottomTabs() {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="Homes" component={Home} />
-      <Tab.Screen name="Products" component={Products} />
+      <Tab.Screen name="Blogs" component={Blogs} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Account" component={Login} />
     </Tab.Navigator>

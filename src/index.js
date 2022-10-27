@@ -11,6 +11,7 @@ import {COLORS} from './config';
 import Payment from './screens/Payment';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import Register from './screens/Register';
 
 function AppContainer() {
   axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -41,6 +42,7 @@ function AppContainer() {
       ) : (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>
       )}
     </NavigationContainer>
