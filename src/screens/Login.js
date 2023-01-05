@@ -3,27 +3,30 @@
 /* eslint-disable react/react-in-jsx-scope */
 import AsyncStorage from '@react-native-community/async-storage';
 import {Formik} from 'formik';
-import {useState} from 'react';
-import {Dimensions, StyleSheet, Text} from 'react-native';
+import {useEffect, useState} from 'react';
+import {Dimensions, Platform, StyleSheet, Text} from 'react-native';
 import {Button} from 'react-native';
 import {Image, TextInput, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {authLogin} from '../redux/api/apiSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { authLoginGG } from '../redux/api/apiSlice';
 
 export default function Login({navigation}) {
   const [hidePassword, setHidePassword] = useState('');
   const dispatch = useDispatch();
-  const handleLogin = async (values) => {
-    const result = await dispatch(authLogin(values));
-    console.log('result', result);
-    if (authLogin.fulfilled.match(result)) {
-      await AsyncStorage.setItem('token', result?.payload?.token.accessToken);
-      alert('Login Success!');
-      navigation.navigate('Home');
-    } else {
-      alert('Login Thất bại!');
-    }
+  const handleLogin = async (values) => {};
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '1024597405761-qnp65b6cugdtabdnsp3onfv4eeuo0td1.apps.googleusercontent.com',
+    });
+  }, []);
+
+  const handleLoginGG = async () => {
+    await GoogleSignin.hasPlayServices();
+    const {idToken} = await GoogleSignin.signIn();
+    dispatch(authLoginGG(idToken));
   };
 
   const handleRegister = () => {
@@ -71,12 +74,9 @@ export default function Login({navigation}) {
                   placeholder="Password"
                   onChangeText={handleChange('password')}
                   testID="password"
-                  // onChangeText={this.props.password}
                   underlineColorAndroid="transparent"
                 />
-                <TouchableOpacity
-                  // activeOpacity={0.8}
-                  style={styles.showPassword}>
+                <TouchableOpacity style={styles.showPassword}>
                   <Image
                     source={
                       hidePassword
@@ -145,7 +145,9 @@ export default function Login({navigation}) {
           }}>
           ------------------------ Hoặc --------------------------
         </Text>
-        <TouchableOpacity style={styles.btnLoginGG} onPress={handleLogin}>
+        <TouchableOpacity
+          style={styles.btnLoginGG}
+          onPress={() => handleLoginGG()}>
           <Image
             source={require('../assets/google.png')}
             style={{

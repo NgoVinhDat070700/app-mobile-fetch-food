@@ -24,8 +24,7 @@ function AppContainer() {
   useEffect(() => {
     tokens();
   }, []);
-  axios.defaults.headers.common['token'] = 'Bearer ' + token;
-  console.log('token', axios.defaults.headers.common['token']);
+  axios.defaults.headers.common['authtoken'] = token;
 
   const Stack = createStackNavigator();
   const {isLogin, user} = useSelector((state) => state.app.auth);

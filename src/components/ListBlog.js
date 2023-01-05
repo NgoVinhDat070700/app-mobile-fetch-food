@@ -14,7 +14,7 @@ function ListBlog({blog}) {
         <View>
           <Image
             source={{
-              uri: `http://192.168.1.219:5000/uploads/${blog.image}`,
+              uri: `http://172.20.10.3:5000/uploads/${blog.image}`,
             }}
             // eslint-disable-next-line react-native/no-inline-styles
             style={{height: 200, width: '100%'}}

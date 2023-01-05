@@ -20,7 +20,7 @@ function ListProduct({product, handleGetDetail}) {
         <View style={{alignItems: 'center', top: -40}}>
           <Image
             source={{
-              uri: `http://192.168.1.219:5000/uploads/${product.image}`,
+              uri: `http://172.20.10.3:5000/uploads/${product.image}`,
             }}
             // eslint-disable-next-line react-native/no-inline-styles
             style={{height: 120, width: 120}}
@@ -100,7 +100,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    height: 220,
+    height: 250,
     width: cardWidth,
     marginHorizontal: 10,
     marginBottom: 20,

@@ -32,18 +32,18 @@ const Cart = ({navigation}) => {
       <View style={style.cartCard}>
         <Image
           source={{
-            uri: `http://192.168.1.219:5000/uploads/${item.image}`,
+            uri: `http://172.20.10.3:5000/uploads/${item.image}`,
           }}
           style={{height: 80, width: 80}}
         />
         <View
           style={{
-            height: 100,
+            height: 120,
             marginLeft: 10,
             paddingVertical: 20,
             flex: 1,
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 16}}>
+          <Text style={{fontWeight: 'bold', fontSize: 14}}>
             {item.nameproduct}
           </Text>
           <Text style={{fontSize: 17, fontWeight: 'bold'}}>${item.price}</Text>

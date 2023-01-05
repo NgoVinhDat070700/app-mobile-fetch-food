@@ -50,6 +50,7 @@ function Payment({navigation}) {
       alert('Đặt hàng thất bại!');
     }
   };
+
   return (
     // eslint-disable-next-line react/react-in-jsx-scope
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -57,6 +58,7 @@ function Payment({navigation}) {
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Payment</Text>
       </View>
+
       <Text style={style.title}>Payment</Text>
       <View style={style.form}>
         <View>
@@ -74,6 +76,7 @@ function Payment({navigation}) {
                     underlineColorAndroid="transparent"
                   />
                 </View>
+
                 <View style={style.formInput}>
                   <TextInput
                     placeholder="Email..."
@@ -85,6 +88,7 @@ function Payment({navigation}) {
                     underlineColorAndroid="transparent"
                   />
                 </View>
+
                 <View style={style.formInput}>
                   <TextInput
                     placeholder="Address..."
@@ -96,6 +100,7 @@ function Payment({navigation}) {
                     underlineColorAndroid="transparent"
                   />
                 </View>
+
                 <View style={style.formInput}>
                   <TextInput
                     placeholder="Phone..."
@@ -107,6 +112,7 @@ function Payment({navigation}) {
                     underlineColorAndroid="transparent"
                   />
                 </View>
+
                 <TouchableOpacity
                   style={style.btnPayment}
                   testID="btnSubmit"

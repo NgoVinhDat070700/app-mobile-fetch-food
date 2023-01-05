@@ -31,12 +31,16 @@ export const getListProductBySearch = createAsyncThunk(
   },
 );
 
-export const authLogin = createAsyncThunk('auth/login', async (formData) => {
+export const authLoginGG = createAsyncThunk('auth/login', async (authtoken) => {
   const response = await axios.post(
-    'http://192.168.1.219:5000/api/users/login',
-    formData,
+    'http://192.168.1.219:5000/api/users/create-or-update-user',
+    {
+      headers: {
+        authtoken,
+      },
+    },
   );
-  return response.data;
+  return response;
 });
 
 export const paymentOrder = createAsyncThunk(
@@ -68,7 +72,10 @@ export const authRegister = createAsyncThunk(
 const initialState = {
   auth: {
     isLogin: false,
-    user: {},
+    user: null,
+    authtoken: null,
+    refreshToken: null,
+    emailVerifiedValue: '',
   },
   userRegister: {},
   products: [],
@@ -165,7 +172,7 @@ const apiSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(authLogin.fulfilled, (state, action) => {
+      .addCase(authLoginGG.fulfilled, (state, action) => {
         state.auth.isLogin = true;
         state.auth.user = action.payload;
       })

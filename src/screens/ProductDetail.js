@@ -52,7 +52,7 @@ function ProductDetail({navigation}) {
           }}>
           <Image
             source={{
-              uri: `http://192.168.1.219:5000/uploads/${productDetail.image}`,
+              uri: `http://172.20.10.3:5000/uploads/${productDetail.image}`,
             }}
             style={{height: 220, width: 220}}
           />
